@@ -1,0 +1,96 @@
+<section class="flex w-full min-h-screen">
+<main class="absolute h-full z-10 w-80 bg-bluenav pl-2 py-3 menu ocultar rounded-r-lg shadow-lg">
+  <nav>
+    <ul class="text-white flex flex-col items-start px-4 space-y-3">
+      <!-- Elemento de navegación: En proceso -->
+      <li
+        class="w-full duration-150 hover:rounded-xl pl-2 py-2 flex items-center hover:bg-white hover:text-bluenav transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor" class="h-6 w-6 mr-2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M2.25 12L11.204 3.045c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+        </svg>
+        <a routerLink="/con_opcion" class="font-semibold">Estudiantes con Opción de Grado</a>
+      </li>
+
+      <!-- Elemento de navegación: Usuario sin proceso -->
+      <li
+        class="w-full duration-150 hover:rounded-xl pl-2 py-2 flex items-center hover:bg-white hover:text-bluenav transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor" class="h-6 w-6 mr-2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M2.25 12L11.204 3.045c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+        </svg>
+        <a routerLink="/sin_proceso" class="font-semibold">Estudiantes sin Opción de Grado</a>
+      </li>
+
+      <!-- Elemento de navegación: Docente -->
+      <li
+        class="w-full duration-150 hover:rounded-xl pl-2 py-2 flex items-center hover:bg-white hover:text-bluenav transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor" class="h-6 w-6 mr-2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M2.25 12L11.204 3.045c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+        </svg>
+        <a routerLink="/load_file" class="font-semibold">Cargar Archivos</a>
+      </li>
+    </ul>
+  </nav>
+</main>
+
+<button id="menu" class="toggle-button absolute top-0 left-0 z-20 px-2 py-1 bg-bluenav text-white rounded-md shadow-lg"
+  (click)="toggleMenu()">☰</button>
+
+  <aside class="w-full px-1 pt-2">
+  <!-- Formulario para Graduados -->
+<div class="card mb-4 shadow-sm border-0 rounded">
+  <div class="card-header bg-primary text-white font-weight-bold text-center">Subir Archivo de Graduados</div>
+  <form class="p-4" (ngSubmit)="onSubmittwo()" enctype="multipart/form-data">
+    <!-- File input for Graduados -->
+    <div class="form-group row mb-3">
+      <label for="exceltwo" class="col-sm-3 col-form-label font-weight-bold">Archivo Excel</label>
+      <div class="col-sm-9">
+        <input type="file" id="exceltwo" name="exceltwo" class="form-control-file" (change)="onFileChangetwo($event, 'exceltwo')" />
+      </div>
+    </div>
+    <!-- Submit button for Graduados -->
+    <div class="form-group row">
+      <div class="col-sm-12 text-right">
+        <button class="btn btn-success" type="submit">Enviar</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Formulario para Actuales -->
+<div class="card shadow-sm border-0 rounded">
+  <div class="card-header bg-secondary text-white font-weight-bold text-center">Subir Archivo de Actuales</div>
+  <form class="p-4" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <!-- File input for Actuales -->
+    <div class="form-group row mb-3">
+      <label for="excel" class="col-sm-3 col-form-label font-weight-bold">Archivo Excel</label>
+      <div class="col-sm-9">
+        <input type="file" id="excel" name="excel" class="form-control-file" (change)="onFileChange($event, 'excel')" />
+      </div>
+    </div>
+    <!-- Submit button for Actuales -->
+    <div class="form-group row">
+      <div class="col-sm-12 text-right">
+        <button class="btn btn-success" type="submit">Enviar</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Enlace a Power BI -->
+<div class="text-center mt-4">
+  <a href="https://app.powerbi.com/view?r=eyJrIjoiOGE1NmFjZTYtZDg1Yy00MjMxLWI3Y2UtMjMzMWJmNWY5OTA3IiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9"
+     target="_blank" class="btn btn-info font-weight-bold">
+    Ver Reporte de Power BI
+  </a>
+</div>
+
+  </aside>
+  
+
+</section>

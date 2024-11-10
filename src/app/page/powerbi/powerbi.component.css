@@ -1,0 +1,34 @@
+
+  iframe{
+    width: 100%;
+    height: 100lvh;
+    
+  }
+  .centered{
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.ocultar {
+    transition: all 0.8s ease-in-out;
+  }
+  button {
+    transition: all 0.5s ease-in-out; /* Duración de 0.5 segundos para todas las propiedades */
+  }
+  
+  button[disabled] {
+    /* Color de fondo cuando el botón está deshabilitado */
+    cursor: not-allowed;    /* Cambia el cursor para indicar que no se puede interactuar */
+    opacity: 0.2;           /* Reducción de opacidad para indicar deshabilitado */
+  }
+  main{
+    position: fixed;
+   
+
+  }
+  #menu{
+    position: fixed;
+  }
+
+
+  
