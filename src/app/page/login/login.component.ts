@@ -53,9 +53,9 @@ password:string  ="";
   this.http.get_token(userlogin).subscribe(dato => {
     console.log( this.http.getToken());
     this.http.isAuth().subscribe(dato => {
-      console.log(dato);
+
       if (dato == true){
-        this.router.navigate(['docente'])
+        this.router.navigate(['load_file'])
         console.log(dato);
       }
     });

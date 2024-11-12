@@ -1,80 +1,145 @@
-
-*{
-    margin: 0px;
-    border: 0px;padding: 0px;
-    box-sizing: border-box;
-  }
-  .contenedor{
-    margin: 0px;
-  width: 100%;
-    height: 98vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url('../../../assets/img/fondo_azul_login.jpeg'); /* Ruta a tu imagen */
-  background-size: cover; /* Ajusta la imagen para cubrir todo el div */
-  background-repeat: no-repeat; /* No repetir la imagen */
-  background-position: center center; /* Centra la imagen */
-  background-attachment: fixed; /* La imagen de fondo se fija en su posición */
-  }
-form {
-border: 5px solid rgb(255, 255, 255);
-border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.5); ;
-width: 500px;
-height: 500px;
-display: flex;
-flex-direction: column;
-justify-content:space-evenly;
-align-items:center;
-
-  
-}
-form h2{
-  font-size: 50px;
-  color: rgb(255, 255, 255);
-}
-.contenedor form div{
-   width: 100%;
-   display: flex;
-   justify-content: center;
-}
-.contenedor form div .input{
-  background: transparent;
-  border: transparent;
-  padding: 5px;
-width: 80%;
-  border-bottom: 4px solid rgb(255, 255, 255);
-  outline: none;
-  color: rgb(255, 255, 255);
-  font-size: 15px;
-  
-}
-.contenedor form div .input:active{
- outline: none;
- border: none;
-  outline: none;
-}
-.contenedor form div input::placeholder{
-  color: rgb(255, 255, 255);
-  font-size: 15px;
-  
-}
-.contenedor form div .input:focus{
- outline: none;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-input[type="submit"]{
-  width: 80%;
-  height: 50px;
+body, html {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+  overflow: hidden;
+}
+
+.circle, .circle1, .circle2 {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #84fab0, #8fd3f4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.circle {
+  width: 120px;
+  height: 120px;
+  left: 25%;
+  top: 25%;
+}
+
+.circle1 {
+  width: 60px;
+  height: 60px;
+  left: 65%;
+  top: 20%;
+}
+
+.circle2 {
+  width: 90px;
+  height: 90px;
+  left: 55%;
+  top: 75%;
+}
+/* Añadimos estas propiedades a body o al contenedor padre */
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+  overflow: hidden;
+  margin: 0;
+}
+
+.login-container {
+  position: relative;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
   border-radius: 10px;
-  outline: none;
-  border: none;
-  transition: background-color 0.5s;
-  font-size: 20px;
-  font-weight: bolder;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
 }
-input[type="submit"]:hover{
-background-color: rgb(51, 247, 68);
-cursor: pointer;
+
+
+h2 {
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input-container input:focus {
+  border-bottom-color: #4e54c8;
+}
+
+.input-container label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #a1c4fd;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label {
+  top: 0;
+  font-size: 12px;
+  color: #4e54c8;
+}
+
+button {
+  background: #84fab0;
+  color: #4e54c8;
+  border: none;
+  padding: 14px 20px;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%;
+}
+
+button:hover {
+  background: #4e54c8;
+  color: #ffffff;
+}
+
+.register {
+  margin-top: 20px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.register a {
+  color: #a1c4fd;
+  text-decoration: none;
+}
+
+.register a:hover {
+  text-decoration: underline;
 }

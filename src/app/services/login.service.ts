@@ -238,7 +238,6 @@ cargar_excel(formData:any): Observable<any> {
 }
 
 cargar_exceltwo(formData:any): Observable<any> {
-
   return this.http.post<any>(`http://127.0.0.1:8000/power/load_graduados`, formData);
 }
 
