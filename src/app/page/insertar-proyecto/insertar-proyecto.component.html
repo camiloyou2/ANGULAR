@@ -1,0 +1,392 @@
+
+
+<style>
+  /* --- Estilos base compartidos --- */
+
+  /* Centrado vertical y horizontal */
+  .centered {
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+
+  /* Transición para ocultar */
+  .ocultar {
+    transition: all 0.8s ease-in-out;
+  }
+
+  /* Estilos para botones */
+  button {
+    transition: all 0.5s ease-in-out;
+  }
+
+  button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.2;
+  }
+
+  /* Estilo iframe */
+  iframe {
+    width: 100%;
+    height: 100lvh;
+  }
+
+  /* Menú lateral fijo */
+  main,
+  #menu {
+    position: fixed;
+  }
+
+  /* Contenedor general */
+  .form-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+  }
+
+  /* Menú lateral */
+  .menu-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300px;
+    background-color: #2c3e50;
+    padding: 1rem;
+    height: 100%;
+    box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+
+  .menu-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .menu-item {
+    margin-bottom: 1.5rem;
+  }
+
+  .menu-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    display: block;
+    transition: background-color 0.3s ease;
+  }
+
+  .menu-link:hover {
+    background-color: #34495e;
+    border-radius: 5px;
+  }
+
+  /* Formulario */
+  .form-wrapper {
+    margin-left: 320px;
+    padding: 2rem;
+    flex: 1;
+    background-color: white;
+  }
+
+  .form {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .form-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+  }
+
+  /* Campos del formulario */
+  .form-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+
+  .form-label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  .form-input {
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-input:focus {
+    border-color: #3498db;
+  }
+
+  .form-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+
+  .form-submit {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .form-submit:hover {
+    background-color: #2980b9;
+  }
+
+  /* Acordeón tipo desplegable */
+  .container {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .titulo {
+    background-color: #e2e8f0;
+    padding: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  input[type="checkbox"]:checked + label + .contenido {
+    display: block;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .contenido {
+    display: none;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 8px;
+  }
+
+  /* Botón de navegación estilo moderno */
+  .boton-nav {
+    background-color: #1e3a8a;
+    color: white;
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .boton-nav svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Tabla responsiva */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+
+  /* Pie fijo */
+  .fijo {
+    bottom: 0;
+    position: fixed;
+  }
+</style>
+
+<section class="form-container">
+  
+  <!-- Menú lateral -->
+  <main class="menu-container">
+    <nav>
+      <ul class="menu-list">
+        <li class="menu-item"><a routerLink="/insertar_estudiante" class="menu-link">Insertar Estudiante</a></li>
+        <li class="menu-item"><a routerLink="/insertar_docente" class="menu-link">Insertar Docente</a></li>
+        <li class="menu-item"><a routerLink="/insertar_modalidad" class="menu-link">Insertar Modalidad</a></li>
+        <li class="menu-item"><a routerLink="/insertar_proyecto" class="menu-link">Insertar Proyecto</a></li>
+        <li class="menu-item"><a routerLink="/modificar" class="menu-link">Modificar y Actualizar Información</a></li>
+        <li class="menu-item"><a routerLink="/load_file" class="menu-link">Inicio</a></li>
+      </ul>
+    </nav>
+  </main>
+
+  <!-- Botón del menú (responsive) -->
+  <button id="menu" class="toggle-button" (click)="toggleMenu()">☰</button>
+
+  <!-- Formulario Proyecto -->
+  <aside class="form-wrapper">
+    <form #proyectoForm="ngForm" (ngSubmit)="onSubmit(proyectoForm)" class="form">
+      <h2 class="form-title">Información del Proyecto</h2>
+
+      <div class="form-fields">
+
+        <!-- Nombre del Proyecto -->
+        <div class="form-field">
+          <label for="nombre_proyecto" class="form-label">Nombre del Proyecto</label>
+          <input type="text" id="nombre_proyecto" name="nombre_proyecto" class="form-input"
+            [(ngModel)]="proyecto.nombre_proyecto" required placeholder="Ingrese el nombre del proyecto" />
+        </div>
+
+        <!-- Profundización -->
+        <div class="form-field">
+          <label for="profundizacion" class="form-label">Profundización</label>
+          <select id="profundizacion" name="profundizacion" class="form-select"
+            [(ngModel)]="proyecto.profundizacion_id" required>
+            <option *ngFor="let item of profundizaciones" [value]="item.id_profundizacion">{{ item.nombre }}</option>
+          </select>
+        </div>
+
+        <!-- Modalidad -->
+        <div class="form-field">
+          <label for="modalidad" class="form-label">Modalidad</label>
+          <select id="modalidad" name="modalidad" class="form-select"
+            [(ngModel)]="proyecto.modalida_id" required>
+            <option *ngFor="let item of modalidades" [value]="item.id_modalida">{{ item.nombre }}</option>
+          </select>
+        </div>
+
+        <!-- Estado -->
+        <div class="form-field">
+          <label for="estado" class="form-label">Estado</label>
+          <select id="estado" name="estado" class="form-select"
+            [(ngModel)]="proyecto.estado_id" required>
+            <option *ngFor="let item of estados_proyecto" [value]="item.id_estado">{{ item.nombre }}</option>
+          </select>
+        </div>
+
+        <!-- Acta de Aprobación -->
+        <div class="form-field">
+          <label for="acta_aprobacion" class="form-label">Acta de Aprobación</label>
+          <input type="text" id="acta_aprobacion" name="acta_aprobacion" class="form-input"
+            [(ngModel)]="proyecto.acta_aprobacion" required placeholder="Número de acta de aprobación" />
+        </div>
+
+        <!-- Acta de Sustentación -->
+        <div class="form-field">
+          <label for="acta_sustentacion" class="form-label">Acta de Sustentación (opcional)</label>
+          <input type="text" id="acta_sustentacion" name="acta_sustentacion" class="form-input"
+            [(ngModel)]="proyecto.acta_sustentacion" placeholder="Número de acta de sustentación" />
+        </div>
+
+        <!-- Fecha de Aprobación -->
+        <div class="form-field">
+          <label for="fecha_aprovacion" class="form-label">Fecha de Aprobación</label>
+          <input type="date" id="fecha_aprovacion" name="fecha_aprovacion" class="form-input"
+            [(ngModel)]="proyecto.fecha_aprovacion" required />
+        </div>
+
+        <!-- Fecha de Sustentación -->
+        <div class="form-field">
+          <label for="fecha_sustentacion" class="form-label">Fecha de Sustentación (opcional)</label>
+          <input type="date" id="fecha_sustentacion" name="fecha_sustentacion" class="form-input"
+            [(ngModel)]="proyecto.fecha_sustentacion" />
+        </div>
+
+        <!-- Buscar Asesor -->
+        <div class="form-field">
+          <label for="asesor" class="form-label">Buscar Asesor</label>
+          <input id="asesor" name="searchTerm" type="text" class="form-input"
+            [(ngModel)]="searchTerm" placeholder="Ingrese palabra clave" (input)="filterOptions()" [ngModelOptions]="{standalone: true}" />
+          <ul *ngIf="filteredJuradosAsesores.length && searchTerm" class="form-dropdown">
+            <li *ngFor="let asesor of filteredJuradosAsesores" (click)="selectAsesor(asesor)">
+              {{ asesor.nombre_completo }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Buscar Director -->
+        <div class="form-field">
+          <label for="director" class="form-label">Buscar Director</label>
+          <input id="director" name="searchDirector" type="text" class="form-input"
+            [(ngModel)]="searchTermDirector" placeholder="Ingrese palabra clave" (input)="filterDirectores()" [ngModelOptions]="{standalone: true}" />
+          <ul *ngIf="filteredDirectores.length && searchTermDirector" class="form-dropdown">
+            <li *ngFor="let director of filteredDirectores" (click)="selectDirector(director)">
+              {{ director.nombre_completo }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Agregar Estudiantes -->
+        <div class="form-field">
+          <label for="cedula" class="form-label">Cédula del Estudiante</label>
+          <div class="form-inline">
+            <input type="number" id="cedula" name="cedula" [(ngModel)]="nuevoEstudiante"
+              class="form-input" placeholder="Ingrese número de cédula" />
+            <button type="button" class="form-add" (click)="agregarEstudiante()" 
+              [disabled]="proyecto.estudiantes.length >= 2 || !nuevoEstudiante">
+              Agregar
+            </button>
+          </div>
+          <small class="form-help">Máximo 2 estudiantes por proyecto.</small>
+        </div>
+
+        <!-- Lista Estudiantes -->
+        <div class="form-field">
+          <ul class="form-list">
+            <li *ngFor="let nombre of visual_estudiantes; let i = index" class="form-list-item">
+              {{ nombre }}
+              <button type="button" class="form-remove" (click)="eliminarEstudiante(i)">Eliminar</button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Nombre Empresa si modalidad es pasantía -->
+        <div class="form-field" *ngIf="proyecto.modalida_id === '3'">
+          <label for="nombre_empresa" class="form-label">Nombre de la Empresa</label>
+          <input type="text" id="nombre_empresa" name="nombre_empresa" class="form-input"
+            [(ngModel)]="proyecto.nombre_empresa" [required]="proyecto.modalida_id === '3'"
+            #nombre_empresa="ngModel" placeholder="Ingrese el nombre de la empresa" />
+          <div *ngIf="nombre_empresa.invalid && nombre_empresa.touched" class="text-danger">
+            El nombre de la empresa es obligatorio si la modalidad es "Pasantía".
+          </div>
+        </div>
+
+        <!-- Especialización si modalidad es especialización -->
+        <div class="form-field" *ngIf="proyecto.modalida_id === '5'">
+          <label for="especializacion" class="form-label">Nombre de la Especialización</label>
+          <select id="especializacion" name="especializacion" class="form-select"
+            [(ngModel)]="proyecto.especializacion_id" [required]="proyecto.modalida_id === '5'">
+            <option *ngFor="let item of especializaciones" [value]="item.id_especializaciones">
+              {{ item.nombre }}
+            </option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" class="form-submit"
+          [disabled]="proyectoForm.invalid || proyecto.estudiantes.length < 1">
+          Guardar Proyecto
+        </button>
+      </div>
+    </form>
+  </aside>
+</section>

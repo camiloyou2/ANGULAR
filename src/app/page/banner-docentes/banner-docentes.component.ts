@@ -1,100 +1,138 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../../services/login.service';
-import { datos_pasantia } from '../../modules/datos_pasantia';
-import { datos_docente } from '../../modules/datos_docente';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import { RouterLink, RouterOutlet } from '@angular/router';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-banner-docentes',
   standalone: true,
-  imports: [DataTablesModule, CommonModule, FormsModule, RouterLink, RouterOutlet],
+  imports: [DataTablesModule, CommonModule, FormsModule, RouterLink],
   templateUrl: './banner-docentes.component.html',
   styleUrl: './banner-docentes.component.css'
 })
 export class BannerDocentesComponent {
-  ocultar_nav = false
-  filestwo: any = {
-    exceltwo: null,
+  ocultar_nav: boolean = false;
+  // Carga de archivos
+  files: { [key: string]: File } = {};
+  filestwo: { [key: string]: File } = {};
+  // Dirección de PowerBI
+  direccion: string = 'https://app.powerbi.com/view?r=eyJrIjoiYzVjNmI0MzMtZDNmZC00NzVlLThhOTgtZDNiN2RiMDk2MGFjIiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9';
+ 
+  constructor(private http: LoginService) {}
 
-  };
-  files: any = {
-    excel: null
-  };
-     
-  constructor(private http: LoginService) {
+  ngOnInit(): void {
+    // Si necesitas lógica al cargar, puedes colocarla aquí
+  }
 
-  } toggleMenu(): void {
-    const menu = document.querySelector('.menu');
+  toggleMenu(): void {
+    const menu = document.querySelector('.menu') as HTMLElement;
 
-    if (menu instanceof HTMLElement) {
-      // Alterna la clase 'hidden' para controlar la visibilidad
-      if (this.ocultar_nav == false) {
-        menu.style.transform = 'translateX(-100%)';
-        this.ocultar_nav = true
-      } else {
+    if (menu) {
+      this.ocultar_nav = !this.ocultar_nav;
+      menu.style.transform = this.ocultar_nav ? 'translateX(-100%)' : 'translateX(0%)';
+    } else {
+      console.error('Menu element not found or not an HTMLElement.');
+    }
+  }
 
-        menu.style.transform = 'translateX(0%)';
-        this.ocultar_nav = false
+  copiarDireccion(): void {
+    navigator.clipboard.writeText(this.direccion)
+      .then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Copiado!',
+          text: 'La dirección fue copiada al portapapeles',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      })
+      .catch(err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al copiar',
+          text: `No se pudo copiar la dirección: ${err}`
+        });
+      });
+  }
+
+  onFileChange(event: Event, field: string): void {
+    const input = event.target as HTMLInputElement;
+    if (input?.files?.length) {
+      this.files[field] = input.files[0];
+    }
+  }
+
+  onFileChangetwo(event: Event, field: string): void {
+    const input = event.target as HTMLInputElement;
+    if (input?.files?.length) {
+      this.filestwo[field] = input.files[0];
+    }
+  }
+
+  onSubmit(): void {
+    const formData = new FormData();
+
+    for (let key in this.files) {
+      if (this.files[key]) {
+        formData.append(key, this.files[key]);
       }
     }
-    else {
 
-      console.error('Menu element not found or not an HTMLElement.');
-
-    }
+    this.http.cargar_excel(formData).subscribe(
+      (response: any) => {
+        if (response.status === "bad") {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Hubo un problema al subir el archivo.",
+            footer: '<a href="#">¿Por qué tengo este problema?</a>'
+          });
+        } else {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Archivo subido con éxito",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      },
+      error => {
+        console.error('Error:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error inesperado',
+          text: 'Ocurrió un error al procesar la solicitud.'
+        });
+      }
+    );
   }
- 
-  ngOnInit() {
-   
-  }
-  onFileChangetwo(event: any, field: string) {
-    this.filestwo[field] = event.target.files[0];
 
-  }
-  onSubmittwo() {
-
+  onSubmittwo(): void {
     const formData = new FormData();
-    
 
-    // Agregar archivos al FormData
     for (let key in this.filestwo) {
-      
       if (this.filestwo[key]) {
-      
         formData.append(key, this.filestwo[key]);
       }
-
-   
     }
-     this.http.cargar_exceltwo(formData).subscribe(dato => {
 
- 
+    this.http.cargar_excel_graduados(formData).subscribe((dato: any) => {
+      if (dato.message?.startsWith("Error")) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: dato.message
+        });
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Todo salió bien!',
+          text: dato.message
+        });
+      }
     });
-    }
-
-    onFileChange(event: any, field: string) {
-      this.files[field] = event.target.files[0];
-  
-    }
-    onSubmit() {
-       
-      const formData = new FormData();
-      
-  
-      // Agregar archivos al FormData
-      for (let key in this.files) {
-        if (this.files[key]) {
-          formData.append(key, this.files[key]);
-        }
-  
-     
-      }
-      console.log(formData)
-       this.http.cargar_excel(formData).subscribe(dato => {
-  
-      });
-      }
+  }
 }

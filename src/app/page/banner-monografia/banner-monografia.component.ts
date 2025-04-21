@@ -11,354 +11,125 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-banner-monografia',
   standalone: true,
-  imports: [DataTablesModule, CommonModule, FormsModule , RouterLink, RouterOutlet],
+  imports: [DataTablesModule, CommonModule, FormsModule, RouterLink],
   templateUrl: './banner-monografia.component.html',
   styleUrl: './banner-monografia.component.css'
 })
 export class BannerMonografiaComponent {
 
+  // 📁 Datos de usuario
+  datosUsuario = {
+    numero_documento: "",
+    nombre_completo: "",
+    codigo: "",
+    estado: "",
+    creditos: null,
+    solicitudes_sis: null,
+    tipo_documento: "",
+    estado_descripcion: null,
+    opcion_grado: null
+  };
 
+  // 📁 Datos del formulario del estudiante
+  estudiante = {
+    numero_documento: '',
+    nombre_uno: '',
+    nombre_dos: '',
+    apellido_uno: '',
+    apellido_dos: '',
+    codigo: '',
+    semestre: '',
+    creditos: '',
+    estado: 'Estudiante'
+  };
 
-  listausertwo!: datos_monografia[];
+  // 📁 Datos del formulario de proyecto
+  today = new Date();
+  form: any = {
+    nombre: '',
+    fecha_inicio: this.today.toLocaleDateString(),
+    terminada: false,
+    id_profesor: null
+  };
 
-  disable_prev: any;
-  disable_next: any = false;
-  puntero_tabla: any;
-  totalPages: any;
-  data !: user[]
-  ocultar_nav = false
-  datatable: any;
-  
+  // 📂 Archivos cargados
+  files: { [key: string]: File | null } = {
+    anteproyecto: null,
+    documento_final: null
+  };
 
-today = new Date();
-form: any = {
-  nombre: '',
-  fecha_inicio: this.today.toLocaleDateString(),
-  terminada: false,
-  id_profesor:null
-};
-datosUsuario = {
-  numero_documento: "",
-  nombre_completo: "",
-  codigo: "",
-  estado: "",
-  creditos: null,
-  solicitudes_sis: null,
-  tipo_documento: "",
-  estado_descripcion: null,
-  opcion_grado: null
-};
-
-files: any = {
-  anteproyecto: null,
- 
-  documento_final: null
-};
-
-estados: any[] = [];
+  // 📋 Listas de soporte (catálogos)
+  estados: any[] = [];
   tiposDocumento: any[] = [];
   opcionesGrado: any[] = [];
 
-  constructor(private http: LoginService) {
+  // 📊 Listados
+  data!: user[];
+  listausertwo!: datos_monografia[];
 
-  }
+  // 🔢 Paginación
+  puntero_tabla: any;
+  totalPages: any;
+  disable_prev: any;
+  disable_next: any = false;
 
+  // 🧭 UI
+  ocultar_nav = false;
+  datatable: any;
   mostrarDiv1 = true;
   mostrarDiv2 = true;
 
-  toggleDiv1() {
-    this.mostrarDiv1 = !this.mostrarDiv1;
+  constructor(private http: LoginService) {}
+
+  ngOnInit(): void {
+    // Inicialización si se requiere
   }
 
-  toggleDiv2() {
-    this.mostrarDiv2 = !this.mostrarDiv2;
-  }
-  ngOnInit() {
-
-    this.http.getAllEstado().subscribe(data => {
-      this.estados = data;
-    });
-
-    this.http.getAllTipoDocumento().subscribe(data => {
-      this.tiposDocumento = data;
-    });
-
-    this.http.getAllOpcionesDeGrado().subscribe(data => {
-      this.opcionesGrado = data;
-    });
-
-    this.disable_prev = true;
-    this.puntero_tabla = 1;
-    this.get_sin_opciones_component(false, false, this.puntero_tabla)
-    $(document).ready(() => {
-      this.datatable = $('#example').DataTable(
-
-        {
-          columnDefs: [
-            {
-                targets: 0, // Primera columna
-                data: null, // No vinculada a un campo específico
-                render: (data, type, row) => {
-                    // `row` contiene toda la fila de datos
-                    const numero_documento = row.numero_documento; // Obtén el valor de la columna `codigo`
-                    return `<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn-datos-monografia btn btn-outline-success" data-numero_documento="${numero_documento}">Ver a detalle</button>`; // Modifica el href según sea necesario
-                },
-                className: 'text-center' // Opcional, para centrar el botón
-            },
-           
-            { className: "centered", targets:"_all" },
-            { orderable: false, targets: [0,1,2,4,5,6] },
-           // { width: "20%", targets: "_all" },
-            { searchable: false, targets: [0,6] }
-        ],
-          data: this.listausertwo,
-          columns: [
-            { data: null, title: 'Pasantia' }, // Título para la primera columna
-            { data: 'codigo', title: 'codigo' },
-            { data: 'numero_documento', title: 'numero_documento' },
-            { data: 'nombre', title: 'nombre' },
-            { data: 'creditos', title: 'creditos' },
-            { data: 'semestre', title: 'semestre' },
-            { data: 'solicitudes_sis', title: 'solicitudes_sis' },
-          //  { data: 'id_opcion', title: 'id_opcion Encargado' },
-          //  { data: 'id_documento', title: 'id_documento del Proyecto' },
-  //          { data: 'id_estado', title: 'id_estado' },
-
-          ],
-
-          pagingType: 'full_numbers',
-          paging: false,
-          lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-          pageLength: 10,
-          autoWidth: true,
-          destroy: true,
-          language: {
-            lengthMenu: "Mostrar _MENU_ registros por página",
-            zeroRecords: "No se encontraron resultados",
-            info: "Total de registros: _TOTAL_",
-            infoEmpty: "No hay datos disponibles",
-            infoFiltered: "(filtrado de _MAX_ registros totales)",
-            search: "Buscar:",
-            paginate: {
-              first: "Primero",
-              last: "Último",
-              next: "Siguiente",
-              previous: "Anterior"
-            }
-          }
-        }
-      );
-    });
-    $('#example').on('click', '.btn-datos-monografia', (event) => {
-      const numero_documento = $(event.currentTarget).data('numero_documento');
-      this.datos_monografia(numero_documento);
-    });
-
-
-  }
-
-  get_sin_opciones_component(previo: boolean, next: boolean, poscion: any) {
-
-    this.http.get_sin_opciones(previo, next, poscion).subscribe(dato => {
-
-      
-      const jsonString = JSON.stringify(dato);
-  
-      const jsonArray = JSON.parse(jsonString);
-     
-
-
-      const userList: datos_monografia[] = jsonArray.map((item: any) => new datos_monografia(item.codigo, item.creditos
-        , item.id_documento ,item.id_estado , item.id_opcion , item.nombre , item.numero_documento, item.semestre , item.solicitudes_sis 
-      ));
-
-      this.listausertwo = userList;
-      this.reloadData()
-    });
-
-  }
-
-
-  reloadData(): void {
-
-    if (this.datatable) {
-
-      this.datatable.clear().draw(); // Limpiar datos existentes
-      this.datatable.rows.add(this.listausertwo); // Añadir nuevos datos
-      this.datatable.columns.adjust().draw(); // Ajustar columnas y redibujar la tabla
-    }
-  }
   toggleMenu(): void {
     const menu = document.querySelector('.menu');
 
     if (menu instanceof HTMLElement) {
-      // Alterna la clase 'hidden' para controlar la visibilidad
-      if (this.ocultar_nav == false) {
-        menu.style.transform = 'translateX(-100%)';
-        this.ocultar_nav = true
-      } else {
-
-        menu.style.transform = 'translateX(0%)';
-        this.ocultar_nav = false
-      }
-    }
-    else {
-
+      this.ocultar_nav = !this.ocultar_nav;
+      menu.style.transform = this.ocultar_nav ? 'translateX(-100%)' : 'translateX(0%)';
+    } else {
       console.error('Menu element not found or not an HTMLElement.');
-
     }
   }
 
-  
-  next() {
-
-    if (this.totalPages == this.puntero_tabla + 1) {
-      this.disable_next = true;
-    }
-
-
-    if (this.puntero_tabla == 1) {
-      this.disable_prev = false
-    }
-
-
-    this.puntero_tabla = this.puntero_tabla + 1;
-
-    this.get_sin_opciones_component(false, false, this.puntero_tabla)
-
-
-
+  toggleDiv1(): void {
+    this.mostrarDiv1 = !this.mostrarDiv1;
   }
 
-  prev() {
-
-    if (this.puntero_tabla + 1 > this.totalPages) {
-      this.disable_next = false;
-    }
-    if (this.puntero_tabla == 2) {
-      this.disable_prev = true
-
-    }
-    this.puntero_tabla = this.puntero_tabla - 1;
-    this.get_sin_opciones_component(false, false, this.puntero_tabla)
-
-
-
+  toggleDiv2(): void {
+    this.mostrarDiv2 = !this.mostrarDiv2;
   }
 
-  datos_monografia(numero_documento: string ): void {
-
-    const objeto = { "numero_documento": numero_documento };
-    this.http.monografia_especifica(objeto).subscribe(dato => {
-     
-
-
-    
-      const aux = JSON.parse(dato); // Convierte la cadena JSON a un array de objetos
-
-      this.datosUsuario.numero_documento =aux[0].numero_documento
-      this.datosUsuario.nombre_completo =aux[0].nombre_completo
-      this.datosUsuario.codigo =aux[0].codigo
-      this.datosUsuario.estado =aux[0].estado
-      this.datosUsuario.creditos =aux[0].creditos
-      this.datosUsuario.solicitudes_sis =aux[0].solicitudes_sis
-      this.datosUsuario.tipo_documento =aux[0].tipo_documento
-      this.datosUsuario.estado_descripcion =aux[0].estado_descripcion
-      this.datosUsuario.opcion_grado =aux[0].opcion_grado
-   
-     
-    });
-    
-    
-      }
-      onFileChange(event: any, field: string) {
-        this.files[field] = event.target.files[0];
-        console.log(event.target.files[0])
-      }
-      onSubmitt(): void {
-        const { numero_documento, nombre_completo, codigo, estado, tipo_documento, creditos, estado_descripcion, solicitudes_sis, opcion_grado } = this.datosUsuario;
-
-  if (
-    !numero_documento ||
-    !nombre_completo ||
-    !codigo ||
-    !estado ||
-    !tipo_documento ||
-    !creditos ||
-    !estado_descripcion ||
-    !solicitudes_sis ||
-    !opcion_grado
-  ) {
- 
-    Swal.fire({
-      title: 'Error!',
-      text: 'Por favor, completa todos los campos antes de enviar.',
-      icon: 'error',
-      confirmButtonText: 'Cool'
-    })
-    return;
-  }
-        this.http.enviarFormulario(this.datosUsuario).subscribe(response => {
-       Swal.fire({
-            title: "Formulario enviado exitosamente:",
-            showClass: {
-              popup: `
-                animate__animated
-                animate__fadeInUp
-                animate__faster
-              `
-            },
-            hideClass: {
-              popup: `
-                animate__animated
-                animate__fadeOutDown
-                animate__faster
-              `
-            }
-          });
-        }, error => {
- 
+  enviarFormulario(): void {
+    this.http.crear_estudiante_proyecto(this.estudiante).subscribe(
+      (data: any) => {
+        if (data.message === `Cédula con N:${this.estudiante.numero_documento} ya está registrada.`) {
           Swal.fire({
-            title: "Error al enviar el formulario:",
-            showClass: {
-              popup: `
-                animate__animated
-                animate__fadeInUp
-                animate__faster
-              `
-            },
-            hideClass: {
-              popup: `
-                animate__animated
-                animate__fadeOutDown
-                animate__faster
-              `
-            }
+            icon: 'warning',
+            title: 'Cédula ya registrada',
+            text: data.message,
           });
+        } else if (data.message === 'Estudiante creado correctamente') {
+          Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: data.message,
+          });
+        }
+      },
+      (error) => {
+        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: `Error al insertar: ${error.message || 'Ocurrió un problema inesperado.'}`,
         });
-        
-        this.ngOnInit();
-        
       }
-      onSubmit() {
-     
-        const formData = new FormData();
-        
-        // Agregar campos de texto al FormData
-        for (let key in this.form) {
-          formData.append(key, this.form[key]);
-        }
+    );
+  }
 
-        // Agregar archivos al FormData
-        for (let key in this.files) {
-          if (this.files[key]) {
-            formData.append(key, this.files[key]);
-          }
-
-       
-        }
-        this.http.cargar_monografia(formData).subscribe(dato => {
-        alert(dato)
-        });
-        }
 }

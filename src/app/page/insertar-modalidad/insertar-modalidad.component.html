@@ -1,4 +1,5 @@
 
+
 <style>
   /* --- Estilos base compartidos --- */
 
@@ -33,7 +34,6 @@
   main,
   #menu {
     position: fixed;
-    height: 100vh;
   }
 
   /* Contenedor general */
@@ -220,80 +220,65 @@
     position: fixed;
   }
 </style>
-<section class="flex w-full min-h-screen">
-  <main class="menu-container ocultar">
+
+<section class="form-container">
+
+  <!-- Menú lateral -->
+  <main class="menu-container">
     <nav>
       <ul class="menu-list">
-        <!-- Elemento de navegación: En proceso -->
         <li class="menu-item">
-          <a href="/insertar_estudiante" class="menu-link">Insertar Estudiante</a>
+          <a routerLink="/insertar_estudiante" class="menu-link">Insertar Estudiante</a>
         </li>
         <li class="menu-item">
-          <a href="/insertar_docente" class="menu-link">Insertar Docente</a>
+          <a routerLink="/insertar_docente" class="menu-link">Insertar Docente</a>
         </li>
         <li class="menu-item">
-          <a href="/insertar_modalidad" class="menu-link">Insertar Modalidad</a>
+          <a routerLink="/insertar_modalidad" class="menu-link">Insertar Modalidad</a>
         </li>
         <li class="menu-item">
-          <a href="/insertar_proyecto" class="menu-link">Insertar Proyecto</a>
+          <a routerLink="/insertar_proyecto" class="menu-link">Insertar Proyecto</a>
         </li>
         <li class="menu-item">
-          <a href="/modificar" class="menu-link">Modificar y Actualizar Información</a>
+          <a routerLink="/modificar" class="menu-link">Modificar y Actualizar Información</a>
         </li>
         <li class="menu-item">
-          <a href="/load_file" class="menu-link">Inicio</a>
+          <a routerLink="/load_file" class="menu-link">Inicio</a>
         </li>
       </ul>
     </nav>
   </main>
 
-  <aside class="w-full px-1 pt-2">
-  <!-- Formulario para Graduados -->
-<div style="display: none;" class="card mb-4 shadow-sm border-0 rounded">
-  <div class="card-header bg-primary text-white font-weight-bold text-center">Subir Archivo de Graduados</div>
-  <form class="p-4" (ngSubmit)="onSubmittwo()" enctype="multipart/form-data">
-    <!-- File input for Graduados -->
-    <div class="form-group row mb-3">
-      <label for="exceltwo" class="col-sm-3 col-form-label font-weight-bold">Archivo Excel</label>
-      <div class="col-sm-9">
-        <input type="file" id="exceltwo" name="exceltwo" class="form-control-file" (change)="onFileChangetwo($event, 'exceltwo')" />
+  <!-- Formulario -->
+  <aside class="form-wrapper">
+    <form (ngSubmit)="onSubmit()" #modalidadForm="ngForm" class="form">
+      <h2 class="form-title">Insertar Modalidad</h2>
+      
+      <div class="form-fields">
+        <div class="form-field">
+          <label for="modalidadName" class="form-label">Nombre de la Modalidad</label>
+          <input
+            type="text"
+            id="modalidadName"
+            name="nombre"
+            [(ngModel)]="modalidad.nombre"
+            required
+            #nombre="ngModel"
+            class="form-input"
+            placeholder="Ingrese el nombre de la modalidad"
+          />
+          <div *ngIf="nombre.invalid && nombre.touched" class="text-danger">
+            El nombre es requerido.
+          </div>
+        </div>
       </div>
-    </div>
-    <!-- Submit button for Graduados -->
-    <div class="form-group row">
-      <div class="col-sm-12 text-right">
-        <button class="btn btn-success" type="submit">Enviar</button>
+
+      <div class="form-buttons">
+        <button type="submit" class="form-submit" [disabled]="modalidadForm.invalid">
+          Crear Modalidad
+        </button>
       </div>
-    </div>
-  </form>
-</div>
-
-<!-- Formulario para Actuales -->
-<div  class="card shadow-sm border-0 rounded">
-  <div style="display: none;" class="card-header bg-secondary text-white font-weight-bold text-center">Subir Archivo de Antiguos</div>
-  <form style="display: none;" class="p-4" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-    <!-- File input for Actuales -->
-    <div class="form-group row mb-3">
-      <label for="excel" class="col-sm-3 col-form-label font-weight-bold">Archivo Excel</label>
-      <div class="col-sm-9">
-        <input type="file" id="excel" name="excel" class="form-control-file" (change)="onFileChange($event, 'excel')" />
-      </div>
-    </div>
-    <!-- Submit button for Actuales -->
-    <div class="form-group row">
-      <div class="col-sm-12 text-right">
-        <button class="btn btn-success" type="submit">Enviar</button>
-      </div>
-    </div>
-  </form>
-  <button class="btn btn-primary" (click)="copiarDireccion()">Copiar Dirección</button>
-
-
-</div>
-
-<!-- Enlace a Power BI -->
-<iframe title="software" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiYzVjNmI0MzMtZDNmZC00NzVlLThhOTgtZDNiN2RiMDk2MGFjIiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
- </aside>
-  
+    </form>
+  </aside>
 
 </section>

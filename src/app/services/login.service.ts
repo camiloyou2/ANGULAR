@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, tap } from 'rxjs';
 import { jwtDecode } from "jwt-decode";
@@ -227,18 +227,8 @@ convenio(): Observable<any> {
   return this.http.get<any>(`${this.URL_convenios}`);
 }
 
-
 cargar_pasantia(formData:any): Observable<any> {
   return this.http.post<any>(`http://127.0.0.1:8000/user/upload`, formData);
-}
-
-cargar_excel(formData:any): Observable<any> {
-
-  return this.http.post<any>(`http://127.0.0.1:8000/power/load_excel`, formData);
-}
-
-cargar_exceltwo(formData:any): Observable<any> {
-  return this.http.post<any>(`http://127.0.0.1:8000/power/load_graduados`, formData);
 }
 
 cargar_monografia(formData:any): Observable<any> {
@@ -253,5 +243,110 @@ cargar_docente(formData:any): Observable<any> {
 }
 
 
+// de aqui en adelante son las urls que se utilizaran y hacia atras se debe mirar que se depura
+
+
+cargar_excel(formData:any): Observable<any> {
+
+  return this.http.post<any>(`http://127.0.0.1:8000/power/load_antiguos`, formData);
+}
+cargar_excel_graduados(formData:any): Observable<any> {
+  return this.http.post<any>(`http://127.0.0.1:8000/user/load_graduados`, formData);
+}
+
+
+consultar_estudiante_por_cedula(cedula:string): Observable<any> {
+  const body = { numero_documento: cedula }; // Construye el JSON
+  return this.http.post<any>(`http://127.0.0.1:8000/user/consultar_estudiante_por_cedula`, body);
+}
+
+consultar_proyecto_por_acta(acta:string): Observable<any> {
+  const body = { acta_aprobados: acta }; // Construye el JSON
+  return this.http.post<any>(`http://127.0.0.1:8000/user/consultar_proyecto_por_acta`, body);
+}
+
+obtener_nombre_completo_por_cedula(nombre: any): Observable<any> {
+  // Construir el cuerpo como un objeto (no JSON.stringify)
+  const body = { nombre };
+
+  // Configurar encabezados
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  console.log(nombre)
+  return this.http.post<any>(
+    `http://127.0.0.1:8000/user/obtener_nombre_completo_por_cedula`,
+    body,
+    { headers } // Se envían los encabezados
+  );
+}
+
+
+modificarEstudianteProyecto(estudiante: any, proyecto: any): Observable<any> {
+  // Construir el cuerpo como un objeto (no JSON.stringify)
+  const body = { estudiante, proyecto };
+
+  // Configurar encabezados
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  return this.http.post<any>(
+    `http://127.0.0.1:8000/user/modificar_estudiante_proyecto`,
+    body,
+    { headers } // Se envían los encabezados
+  );
+}
+
+crear_estudiante_proyecto(estudiante: any): Observable<any> {
+  // Construcción del cuerpo de la solicitud
+ 
+
+  return this.http.post<any>(`http://127.0.0.1:8000/user/crear_estudiante`, estudiante);
+}
+
+guardarProyecto(proyecto: any): Observable<any> {
+  return this.http.post(`http://127.0.0.1:8000/user/crear_proyecto`, proyecto);
+}
+
+total_modalidades(): Observable<any> {
+  return this.http.get(`http://127.0.0.1:8000/user/total_modalidades`);
+}
+obtener_jurados_ascesores(): Observable<any> {
+  return this.http.get(`http://127.0.0.1:8000/user/obtener_jurados_ascesores`);
+}
+
+all_docentes_directoes(): Observable<any> {
+  return this.http.get(`http://127.0.0.1:8000/user/all_docentes_directoes`);
+}
+
+CrearModalidadnueva(modalidad: any): Observable<any> {
+  // Construir el cuerpo como un objeto (no JSON.stringify)
+  const body = { modalidad };
+
+  // Configurar encabezados
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  return this.http.post<any>(
+    `http://127.0.0.1:8000/user/CrearModalidadnueva`,
+    body,
+    { headers } // Se envían los encabezados
+  );
+}
+
+
+
+
+
+
+insertar_datos_docentes(docente: any): Observable<any> {
+  // Construir el cuerpo como un objeto (no JSON.stringify)
+  const body = { docente };
+
+  // Configurar encabezados
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  return this.http.post<any>(
+    `http://127.0.0.1:8000/user/insertar_datos_docentes`,
+    body,
+    { headers } // Se envían los encabezados
+  );
+}
 
 }

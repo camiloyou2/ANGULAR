@@ -1,0 +1,306 @@
+
+    <section class="flex w-full min-h-screen bg-light">
+      <main class="absolute h-full z-10 w-80 bg-bluenav pl-2 py-3 menu ocultar rounded-r-lg shadow-lg">
+        <nav>
+          <ul class="text-white flex flex-col items-start px-4 space-y-3">
+            <!-- Elemento de navegación: En proceso -->
+            <li
+              class="w-full duration-150 hover:rounded-xl pl-2 py-2 flex items-center hover:bg-white hover:text-bluenav transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="h-6 w-6 mr-2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M2.25 12L11.204 3.045c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+              </svg>
+              <a routerLink="/insertar" class="font-semibold">Insertar Proyectos</a>
+            </li>
+      
+            <!-- Elemento de navegación: Usuario sin proceso -->
+            <li
+              class="w-full duration-150 hover:rounded-xl pl-2 py-2 flex items-center hover:bg-white hover:text-bluenav transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="h-6 w-6 mr-2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M2.25 12L11.204 3.045c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+              </svg>
+              <a routerLink="/modificar" class="font-semibold">Modificar y Actualizar Informacións</a>
+            </li>
+      
+            <!-- Elemento de navegación: Docente -->
+            <li
+              class="w-full duration-150 hover:rounded-xl pl-2 py-2 flex items-center hover:bg-white hover:text-bluenav transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="h-6 w-6 mr-2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M2.25 12L11.204 3.045c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+              </svg>
+              <a routerLink="/load_file" class="font-semibold">Cargar Archivos</a>
+            </li>
+          </ul>
+        </nav>
+      </main>
+      
+      <button id="menu" class="toggle-button absolute top-0 left-0 z-20 px-2 py-1 bg-bluenav text-white rounded-md shadow-lg"
+        (click)="toggleMenu()">☰</button>
+      
+      <aside class="w-full px-4 pt-4">
+        <!-- Formulario Información del Estudiante -->
+        <div class="form-container bg-white border border-primary rounded p-4 mb-4 shadow">
+          <h2 class="text-primary text-center mb-4">Información del Estudiante</h2>
+          <form #combinedForm="ngForm" (ngSubmit)="onSubmit()" class="container mt-4">
+            <h2 class="text-center mb-4">Información del Estudiante</h2>
+            <div class="row">
+                <!-- Número de Documento -->
+                <div class="col-md-6 mb-3">
+                  <label for="numero_documento" class="form-label">Número de Documento:</label>
+                  <input
+                    type="text"
+                    id="numero_documento"
+                    name="numero_documento"
+                    [(ngModel)]="estudiante.numero_documento"
+                    required
+                    minlength="1"
+                    maxlength="11"
+                    class="form-control"
+                    placeholder="Ingrese el número de documento"
+                  />
+                </div>
+            
+                <!-- Primer Nombre -->
+                <div class="col-md-6 mb-3">
+                  <label for="nombre_uno" class="form-label">Primer Nombre:</label>
+                  <input
+                    type="text"
+                    id="nombre_uno"
+                    name="nombre_uno"
+                    [(ngModel)]="estudiante.nombre_uno"
+                    required
+                    class="form-control"
+                    placeholder="Ingrese el primer nombre"
+                  />
+                </div>
+            
+                <!-- Segundo Nombre -->
+                <div class="col-md-6 mb-3">
+                  <label for="nombre_dos" class="form-label">Segundo Nombre:</label>
+                  <input
+                    type="text"
+                    id="nombre_dos"
+                    name="nombre_dos"
+                    [(ngModel)]="estudiante.nombre_dos"
+                    class="form-control"
+                    placeholder="Ingrese el segundo nombre (opcional)"
+                  />
+                </div>
+            
+                <!-- Primer Apellido -->
+                <div class="col-md-6 mb-3">
+                  <label for="apellido_uno" class="form-label">Primer Apellido:</label>
+                  <input
+                    type="text"
+                    id="apellido_uno"
+                    name="apellido_uno"
+                    [(ngModel)]="estudiante.apellido_uno"
+                    required
+                    class="form-control"
+                    placeholder="Ingrese el primer apellido"
+                  />
+                </div>
+            
+                <!-- Segundo Apellido -->
+                <div class="col-md-6 mb-3">
+                  <label for="apellido_dos" class="form-label">Segundo Apellido:</label>
+                  <input
+                    type="text"
+                    id="apellido_dos"
+                    name="apellido_dos"
+                    [(ngModel)]="estudiante.apellido_dos"
+                    class="form-control"
+                    placeholder="Ingrese el segundo apellido (opcional)"
+                  />
+                </div>
+            
+                <!-- Código -->
+                <div class="col-md-6 mb-3">
+                  <label for="codigo" class="form-label">Código:</label>
+                  <input
+                    type="text"
+                    id="codigo"
+                    name="codigo"
+                    [(ngModel)]="estudiante.codigo"
+                    required
+                    class="form-control"
+                    placeholder="Ingrese el código del estudiante"
+                  />
+                </div>
+            
+                <!-- Semestre -->
+                <div class="col-md-6 mb-3">
+                  <label for="semestre" class="form-label">Semestre:</label>
+                  <input
+                    type="text"
+                    id="semestre"
+                    name="semestre"
+                    [(ngModel)]="estudiante.semestre"
+                    maxlength="2"
+                    class="form-control"
+                    placeholder="Ingrese el semestre (opcional)"
+                  />
+                </div>
+             <!-- Creditos -->
+             <div class="col-md-6 mb-3">
+              <label for="creditos" class="form-label">Creditos:</label>
+              <input
+                type="text"
+                id="creditos"
+                name="creditos"
+                [(ngModel)]="estudiante.creditos"
+                maxlength="2"
+                class="form-control"
+                placeholder="Ingrese los creditos (opcional)"
+              />
+            </div>
+                <!-- Estado -->
+                <div class="col-md-6 mb-3">
+                  <label for="estado" class="form-label">Estado:</label>
+                  <select
+                    id="estado"
+                    name="estado"
+                    [(ngModel)]="estudiante.estado"
+                    required
+                    class="form-select"
+                  >
+                    <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+                  </select>
+                </div>
+              </div>
+          
+            <!-- Botón para mostrar/ocultar Información del Proyecto -->
+            <div class="text-center mt-4">
+              <button type="button" class="btn btn-info" (click)="toggleProyecto()">
+                {{ mostrarProyecto ? 'Ocultar Información del Proyecto' : 'Mostrar Información del Proyecto' }}
+              </button>
+            </div>
+          
+            <!-- Sección de Información del Proyecto -->
+            <div *ngIf="mostrarProyecto">
+              <h2 class="text-center my-4">Información del Proyecto</h2>
+              <div class="row">
+                <!-- Nombre del Proyecto -->
+                <div class="col-md-12 mb-3">
+                  <label for="nombre_proyecto" class="form-label">Nombre del Proyecto:</label>
+                  <input
+                    type="text"
+                    id="nombre_proyecto"
+                    name="nombre_proyecto"
+                    [(ngModel)]="proyecto.nombre_proyecto"
+                    required
+                    maxlength="40"
+                    class="form-control"
+                    placeholder="Ingrese el nombre del proyecto"
+                  />
+                </div>
+              <!-- acta_id -->
+              <div class="col-md-6 mb-3">
+                <label for="acta_id" class="form-label">  Numero de acta :</label>
+                <input
+                  type="text"
+                  id="acta_id"
+                  name="acta_id"
+                  [(ngModel)]="proyecto.acta_id"
+                  required
+                  class="form-control"
+                  placeholder="Ingrese el  número de acta"
+                />
+              </div>
+                <!-- Profundización -->
+                <div class="col-md-6 mb-3">
+                  <label for="profundizacion_id" class="form-label">Profundización:</label>
+                  <select
+                    id="profundizacion_id"
+                    name="profundizacion_id"
+                    [(ngModel)]="proyecto.profundizacion_id"
+                    required
+                    class="form-select"
+                  >
+                    <option *ngFor="let profundizacion of profundizaciones" [value]="profundizacion.id_profundizacion">
+                      {{ profundizacion.nombre }}
+                    </option>
+                  </select>
+                </div>
+            
+                <!-- Modalidad -->
+                <div class="col-md-6 mb-3">
+                  <label for="modalida_id" class="form-label">Modalidad:</label>
+                  <select
+                    id="modalida_id"
+                    name="modalida_id"
+                    [(ngModel)]="proyecto.modalida_id"
+                    required
+                    class="form-select"
+                  >
+                    <option *ngFor="let modalida of modalidades" [value]="modalida.id_modalida">
+                      {{ modalida.nombre }}
+                    </option>
+                  </select>
+                </div>
+          
+          
+          
+                  <!-- Estado proyecto -->
+                  <div class="col-md-6 mb-3">
+                      <label for="modalida_id" class="form-label">Estado del proyecto:</label>
+                      <select
+                        id="estado_id"
+                        name="estado_id"
+                        [(ngModel)]="proyecto.estado_id"
+                        required
+                        class="form-select"
+                      >
+                        <option *ngFor="let estado of estados_proyecto" [value]="estado.id_estado">
+                          {{ estado.nombre }}
+                        </option>
+                      </select>
+                    </div>
+          
+          
+              </div>
+            
+            </div>
+          
+            <!-- Botones de acción -->
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-primary" [disabled]="combinedForm.invalid">Guardar</button>
+              <button type="reset" class="btn btn-secondary ms-2">Limpiar</button>
+            </div>
+          </form>
+        </div>
+    
+        <!-- Formulario Gestión de Modalidades -->
+        <div class="form-container bg-light border border-secondary rounded p-4 shadow">
+          <h2 class="text-secondary text-center mb-4">Gestión de Modalidades</h2>
+          <form #modalidaForm="ngForm" (ngSubmit)="onSubmitmodalidad()" class="p-4 border rounded">
+            <!-- Nombre Modalidad -->
+            <div class="mb-3">
+              <label for="nombre_modalida" class="form-label">Nombre de la Modalidad:</label>
+              <input
+                type="text"
+                id="nombre_modalida"
+                name="nombre_modalida"
+                [(ngModel)]="modalida.nombre_modalida"
+                class="form-control"
+                placeholder="Ingrese el nombre de la modalidad"
+                required
+                maxlength="20"
+              />
+            </div>
+        
+            <!-- Botones de acción -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary" [disabled]="modalidaForm.invalid">Guardar</button>
+              <button type="button" class="btn btn-secondary ms-2" (click)="limpiarFormulario()">Limpiar</button>
+            </div>
+          </form>
+        </div>
+      </aside>
+    </section>
+    

@@ -7,14 +7,21 @@ import { BannerMonografiaComponent } from './page/banner-monografia/banner-monog
 
 import { BannerDocentesComponent } from './page/banner-docentes/banner-docentes.component';
 import { PowerbiComponent } from './page/powerbi/powerbi.component';
+import { InsetarUsuarioComponent } from './page/insetar-usuario/insetar-usuario.component';
+import { ModificarUsuarioComponent } from './page/modificar-usuario/modificar-usuario.component';
+import { InsertarProyectoComponent } from './page/insertar-proyecto/insertar-proyecto.component';
+import { InsertarModalidadComponent } from './page/insertar-modalidad/insertar-modalidad.component';
 // , canActivate: [guardloginGuard] 
 
 export const routes: Routes = [
     
-    { path: 'sin_proceso', component: BannerMonografiaComponent },
-    { path: 'load_file', component: BannerDocentesComponent , canActivate:[guardloginGuard]  },
-    { path: 'login', component: LoginComponent  },
-    { path: 'con_opcion', component: PowerbiComponent , canActivate:[guardloginGuard] },
+    { path: 'insertar_docente', component: PowerbiComponent },
+    { path: 'modificar', component: ModificarUsuarioComponent },
+    { path: 'insertar_modalidad', component: InsertarModalidadComponent },
+    { path: 'insertar_proyecto', component: InsertarProyectoComponent },
+    { path: 'insertar_estudiante', component: BannerMonografiaComponent },
+    { path: 'load_file', component: BannerDocentesComponent },//
+    { path: 'login', component: LoginComponent  },//
     { path: '', redirectTo: '/login', pathMatch: 'full'}
-
+//, canActivate:[guardloginGuard]  
 ];

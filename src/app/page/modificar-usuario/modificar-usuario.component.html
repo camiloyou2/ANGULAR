@@ -1,0 +1,419 @@
+
+
+<style>
+  /* --- Estilos base compartidos --- */
+
+  /* Centrado vertical y horizontal */
+  .centered {
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+
+  /* Transición para ocultar */
+  .ocultar {
+    transition: all 0.8s ease-in-out;
+  }
+
+  /* Estilos para botones */
+  button {
+    transition: all 0.5s ease-in-out;
+  }
+
+  button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.2;
+  }
+
+  /* Estilo iframe */
+  iframe {
+    width: 100%;
+    height: 100lvh;
+  }
+
+  /* Menú lateral fijo */
+  main,
+  #menu {
+    position: fixed;
+  }
+
+  /* Contenedor general */
+  .form-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+  }
+
+  /* Menú lateral */
+  .menu-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 300px;
+    background-color: #2c3e50;
+    padding: 1rem;
+    height: 100%;
+    box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+
+  .menu-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .menu-item {
+    margin-bottom: 1.5rem;
+  }
+
+  .menu-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    display: block;
+    transition: background-color 0.3s ease;
+  }
+
+  .menu-link:hover {
+    background-color: #34495e;
+    border-radius: 5px;
+  }
+
+  /* Formulario */
+  .form-wrapper {
+    margin-left: 320px;
+    padding: 2rem;
+    flex: 1;
+    background-color: white;
+  }
+
+  .form {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .form-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+  }
+
+  /* Campos del formulario */
+  .form-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+
+  .form-label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  .form-input {
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-input:focus {
+    border-color: #3498db;
+  }
+
+  .form-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+
+  .form-submit {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .form-submit:hover {
+    background-color: #2980b9;
+  }
+
+  /* Acordeón tipo desplegable */
+  .container {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .titulo {
+    background-color: #e2e8f0;
+    padding: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  input[type="checkbox"]:checked + label + .contenido {
+    display: block;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .contenido {
+    display: none;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 8px;
+  }
+
+  /* Botón de navegación estilo moderno */
+  .boton-nav {
+    background-color: #1e3a8a;
+    color: white;
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .boton-nav svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Tabla responsiva */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+
+  /* Pie fijo */
+  .fijo {
+    bottom: 0;
+    position: fixed;
+  }
+</style>
+
+<section class="form-container">
+  <!-- Menú lateral -->
+  <main class="menu-container ocultar">
+    <nav>
+      <ul class="menu-list">
+        <!-- Elemento de navegación: En proceso -->
+        <li class="menu-item">
+          <a href="/insertar_estudiante" class="menu-link">Insertar Estudiante</a>
+        </li>
+        <li class="menu-item">
+          <a href="/insertar_docente" class="menu-link">Insertar Docente</a>
+        </li>
+        <li class="menu-item">
+          <a href="/insertar_modalidad" class="menu-link">Insertar Modalidad</a>
+        </li>
+        <li class="menu-item">
+          <a href="/insertar_proyecto" class="menu-link">Insertar Proyecto</a>
+        </li>
+        <li class="menu-item">
+          <a href="/modificar" class="menu-link">Modificar y Actualizar Información</a>
+        </li>
+        <li class="menu-item">
+          <a href="/load_file" class="menu-link">Inicio</a>
+        </li>
+      </ul>
+    </nav>
+  </main>
+
+  <!-- Botón de menú -->
+  <button id="menu" class="toggle-button" onclick="toggleMenu()">☰</button>
+
+  <!-- Contenido principal -->
+  <aside class="form-wrapper">
+    <div class="form">
+      <!-- Título principal -->
+      <h2 class="form-title">Buscar y Modificar</h2>
+
+      <!-- Formulario de búsqueda -->
+      <div class="form-fields">
+        <div class="form-field">
+          <label for="numero_documento" class="form-label">Número de Documento de Estudiante:</label>
+          <input type="text" id="numero_documento" name="numero_documento" [(ngModel)]="estudiante.numero_documento"
+            class="form-input" placeholder="Ingrese el número de documento" />
+        </div>
+        <div class="form-field">
+          <button class="form-submit" (click)="buscarEstudiante()">Buscar</button>
+        </div>
+      </div>
+
+      <!-- Formulario de modificación -->
+      <div *ngIf="mostrarProyecto">
+        <form #combinedForm="ngForm" (ngSubmit)="onSubmit()" class="form">
+          <h2 class="form-title">Modificar del Estudiante</h2>
+          <div class="form-fields">
+            <!-- Número de Documento -->
+            <div class="form-field">
+              <label for="numero_documento" class="form-label">Número de Documento:</label>
+              <input type="text" id="numero_documento" name="numero_documento" [(ngModel)]="estudiante.numero_documento"
+                required minlength="1" maxlength="11" class="form-input" placeholder="Ingrese el número de documento" />
+            </div>
+
+            <!-- Primer Nombre -->
+            <div class="form-field">
+              <label for="nombre_uno" class="form-label">Primer Nombre:</label>
+              <input type="text" id="nombre_uno" name="nombre_uno" [(ngModel)]="estudiante.nombre_uno" required
+                class="form-input" placeholder="Ingrese el primer nombre" />
+            </div>
+
+            <!-- Segundo Nombre -->
+            <div class="form-field">
+              <label for="nombre_dos" class="form-label">Segundo Nombre:</label>
+              <input type="text" id="nombre_dos" name="nombre_dos" [(ngModel)]="estudiante.nombre_dos"
+                class="form-input" placeholder="Ingrese el segundo nombre (opcional)" />
+            </div>
+
+            <!-- Primer Apellido -->
+            <div class="form-field">
+              <label for="apellido_uno" class="form-label">Primer Apellido:</label>
+              <input type="text" id="apellido_uno" name="apellido_uno" [(ngModel)]="estudiante.apellido_uno" required
+                class="form-input" placeholder="Ingrese el primer apellido" />
+            </div>
+
+            <!-- Segundo Apellido -->
+            <div class="form-field">
+              <label for="apellido_dos" class="form-label">Segundo Apellido:</label>
+              <input type="text" id="apellido_dos" name="apellido_dos" [(ngModel)]="estudiante.apellido_dos"
+                class="form-input" placeholder="Ingrese el segundo apellido (opcional)" />
+            </div>
+
+            <!-- Código -->
+            <div class="form-field">
+              <label for="codigo" class="form-label">Código:</label>
+              <input type="text" id="codigo" name="codigo" [(ngModel)]="estudiante.codigo" required class="form-input"
+                placeholder="Ingrese el código del estudiante" />
+            </div>
+
+            <!-- Semestre -->
+            <div class="form-field">
+              <label for="semestre" class="form-label">Semestre:</label>
+              <input type="text" id="semestre" name="semestre" [(ngModel)]="estudiante.semestre" maxlength="2"
+                class="form-input" placeholder="Ingrese el semestre (opcional)" />
+            </div>
+
+            <!-- Créditos -->
+            <div class="form-field">
+              <label for="creditos" class="form-label">Créditos:</label>
+              <input type="text" id="creditos" name="creditos" [(ngModel)]="estudiante.creditos" maxlength="3"
+                class="form-input" placeholder="Ingrese los créditos (opcional)" />
+            </div>
+
+            <!-- Estado -->
+            <div class="form-field">
+              <label for="estado" class="form-label">Estado:</label>
+              <select id="estado" name="estado" [(ngModel)]="estudiante.estado" required class="form-input">
+                <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Sección de Información del Proyecto -->
+          <div *ngIf="mostrarProyecto">
+            <h2 class="form-title">Información del Proyecto</h2>
+            <div class="form-fields">
+              <!-- Nombre del Proyecto -->
+              <div class="form-field">
+                <label for="nombre_proyecto" class="form-label">Nombre del Proyecto:</label>
+                <input type="text" id="nombre_proyecto" name="nombre_proyecto" [(ngModel)]="proyecto.nombre_proyecto"
+                  required maxlength="40" class="form-input" placeholder="Ingrese el nombre del proyecto" />
+              </div>
+
+              <!-- Acta Aprobados -->
+              <div class="form-field">
+                <label for="acta_aprobados" class="form-label">Número de Acta Aprobados:</label>
+                <input type="text" id="acta_aprobados" name="acta_aprobados" [(ngModel)]="proyecto.acta_aprobados"
+                  class="form-input" placeholder="Ingrese el número de acta aprobados" />
+              </div>
+
+              <!-- Acta Sustentación -->
+              <div class="form-field">
+                <label for="acta_sustentacion" class="form-label">Número de Acta Sustentación:</label>
+                <input type="text" id="acta_sustentacion" name="acta_sustentacion"
+                  [(ngModel)]="proyecto.acta_sustentacion" class="form-input"
+                  placeholder="Ingrese el número de acta sustentación" />
+              </div>
+
+              <!-- Asesor -->
+              <div class="form-field">
+                <label for="asesor" class="form-label">Asesor Asignado:</label>
+                <input type="text" id="asesor" name="asesor" [(ngModel)]="proyecto.ascesor" class="form-input"
+                  placeholder="Ingrese el nombre del asesor" />
+                <small class="form-text">{{ proyecto.ascesorNombre || 'Sin asignar' }}</small>
+              </div>
+
+              <!-- Asesor Externo -->
+              <div class="form-field">
+                <label for="asesor_externo" class="form-label">Asesor Externo:</label>
+                <input type="text" id="asesor_externo" name="asesor_externo" [(ngModel)]="proyecto.ascesor_dos"
+                  class="form-input" placeholder="Ingrese el nombre del asesor externo (opcional)" />
+                <small class="form-text">{{ proyecto.ascesorDosNombre || 'Sin asignar' }}</small>
+              </div>
+
+              <!-- Director -->
+              <div class="form-field">
+                <label for="director" class="form-label">Director:</label>
+                <input type="text" id="director" name="director" [(ngModel)]="proyecto.director" class="form-input"
+                  placeholder="Ingrese el nombre del director" />
+                <small class="form-text">{{ proyecto.directorNombre || 'Sin asignar' }}</small>
+              </div>
+
+              <!-- Fecha Aprobados -->
+              <div class="form-field">
+                <label for="fecha_aprovados" class="form-label">Fecha de Aprobación:</label>
+                <label>{{ fecha_ddos }}</label>
+                <input type="date" id="fecha_aprovados" name="fecha_aprovados" [(ngModel)]="proyecto.fecha_aprovados"
+                  class="form-input" />
+              </div>
+
+              <!-- Fecha Sustentación -->
+              <div class="form-field">
+                <label for="fecha_sustentacion" class="form-label">Fecha de Sustentación:</label>
+                <label>{{ fecha }}</label>
+                <input type="date" id="fecha_sustentacion" name="fecha_sustentacion"
+                  [(ngModel)]="proyecto.fecha_sustentacion" class="form-input" />
+              </div>
+            </div>
+
+            <!-- Botón para guardar cambios -->
+            <div class="form-field">
+              <button type="submit" class="form-submit">Guardar Cambios</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </aside>
+</section>
